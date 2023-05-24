@@ -13,6 +13,7 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       Message: {message1}
+      <br />
       LazyMessage: {message2}
       <div>
         <Link href='/parallel'>
