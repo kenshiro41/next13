@@ -1,30 +1,19 @@
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
-import Link from 'next/link';
-import styles from './page.module.css';
+import styles from '../page.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default async function Home() {
-  const res1 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/hello`);
-  const message1 = await res1.text();
-  const res2 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lazy`);
-  const message2 = await res2.text();
+  const [res1, res2] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_URL}/api/hello`),
+    fetch(`${process.env.NEXT_PUBLIC_URL}/api/lazy`),
+  ]);
+  const [message1, message2] = await Promise.all([res1.text(), res2.text()]);
   return (
     <main className={styles.main}>
       Message: {message1}
       LazyMessage: {message2}
-      <div>
-        <Link href='/parallel'>
-          <span
-            style={{
-              color: 'skyblue',
-            }}
-          >
-            Parallel
-          </span>
-        </Link>
-      </div>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
